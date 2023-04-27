@@ -123,3 +123,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+POSTER_POS_API_KEY = '590085:2678523168eeca3ec11d86a373e60ef2'
+POSTER_POS_API_URL = 'https://joinposter.com/api/'
