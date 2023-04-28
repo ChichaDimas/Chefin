@@ -24,26 +24,21 @@ def get_menu_categories(api_key):
         return response.json().get('response')
     return []
 
-# def menu(request):
-#     categories = get_menu_categories(POSTER_POS_API_KEY)
-#
-#     json_str = categories.price
-#     price_dict = json.loads(json_str)
-#     price = price_dict.get('1')
-#
-#     context = {'categories': categories,
-#                "title":'Hellobro',
-#                'price':price,
-#                }
-#     return render(request, 'menu.html', context)
-
-
 def menu(request):
     categories = get_menu_categories(POSTER_POS_API_KEY)
 
-    prices = [category.get('price', {}).get('1') for category in categories]
-
     context = {'categories': categories,
-               'prices': prices,
-               "title": 'Hellobro', }
+               "title":'Hellobro',
+               }
     return render(request, 'menu.html', context)
+
+
+# def menu(request):
+#     categories = get_menu_categories(POSTER_POS_API_KEY)
+#
+#     prices = [category.get('price', {}).get('1') for category in categories]
+#
+#     context = {'categories': categories,
+#                'prices': prices,
+#                "title": 'Hellobro', }
+#     return render(request, 'menu.html', context)
