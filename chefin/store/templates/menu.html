@@ -11,21 +11,20 @@
 </head>
 <body>
 
-{#<h1>Menu</h1>#}
-{#<ul>#}
-{#    {% for category in categories %}#}
-{#        <li>{{ category }}</li>#}
-{#    {% endfor %}#}
-{#</ul>#}
+<!--<h1>Menu</h1>-->
+<!--<ul>-->
+<!--    {% for i in photo %}-->
+<!--    <img src="{{ i }}" alt="">-->
+<!--    {% endfor %}-->
+<!--</ul>-->
+
 
 <div class="row" style="margin-top: 50px; margin-left: 4cm; margin-right: 2cm;">
         {% for category in categories %}
             <div class="col-md-4">
                 <div class="card mx-2 my-2" style="width: 20rem;">
-                    <img src="{{ category.photo}}">
+                    <img src="{{ category.img}}">
 
-{#                    <img src="{% static 'store/images/photo.jpg' %}">#}
-{#                      <img src="/upload/pos_cdb_232486/menu/category_1638216093_4.png">#}
 
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Категория: {{ category.category_name }}</li>

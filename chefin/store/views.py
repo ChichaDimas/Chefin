@@ -26,10 +26,19 @@ def get_menu_categories(api_key):
 
 def menu(request):
     categories = get_menu_categories(POSTER_POS_API_KEY)
-
+    photo = []
+    for category in categories:
+        if category.get('photo'):
+            photo.append(f"https://joinposter.com{category['photo']}")
+    print(photo)
+    print(photo[1])
     context = {'categories': categories,
                "title":'Hellobro',
+               'photo': photo,
                }
+
+
+
     return render(request, 'menu.html', context)
 
 
