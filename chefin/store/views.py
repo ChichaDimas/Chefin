@@ -30,24 +30,16 @@ def menu(request):
     for category in categories:
         if category.get('photo'):
             photo.append(f"https://joinposter.com{category['photo']}")
-    print(photo)
-    print(photo[1])
-    context = {'categories': categories,
-               "title":'Hellobro',
-               'photo': photo,
-               }
 
+    for i, category in enumerate(categories):
+        if category.get('photo'):
+            category['photo'] = photo[i]
 
+    context = {
+        'categories': categories,
+        'title': 'Hellobro',
 
+    }
     return render(request, 'menu.html', context)
 
 
-# def menu(request):
-#     categories = get_menu_categories(POSTER_POS_API_KEY)
-#
-#     prices = [category.get('price', {}).get('1') for category in categories]
-#
-#     context = {'categories': categories,
-#                'prices': prices,
-#                "title": 'Hellobro', }
-#     return render(request, 'menu.html', context)
