@@ -56,7 +56,7 @@ def menu(request):
         'title': 'Hellobro',
 
     }
-    return render(request, 'menu.html', context)
+    return render(request, 'store/menu.html', context)
 
 def payment(request):
     amount = 1000 # сумма оплаты в копейках (в данном случае 10 рублей)

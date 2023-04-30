@@ -19,7 +19,7 @@ from django.urls import path
 
 from store.views import *
 
-from chefin.store.views import *
+# from chefin.store.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
