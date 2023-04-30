@@ -20,7 +20,7 @@
 
 <div class="row" style="margin-top: 50px; margin-left: 4cm; margin-right: 2cm;">
   {% for category in categories %}
-    {% if 'Закуски' in category.category_name %}
+    {% if '' in category.category_name %}
       <div class="col-md-4">
         <div class="card mx-2 my-2" style="width: 20rem;">
           <img src="{{ category.photo }}">
@@ -39,7 +39,63 @@
 </div>
 
 
+<div class="container py-5">
+  <h1 class="mb-5">Корзина</h1>
 
+  <div class="row">
+    <div class="col-md-8">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Товар</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Итого</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Товар 1</td>
+            <td>100 грн.</td>
+            <td>
+              <div class="input-group">
+                <button class="btn btn-outline-secondary" type="button">-</button>
+                <input type="text" class="form-control text-center" value="1">
+                <button class="btn btn-outline-secondary" type="button">+</button>
+              </div>
+            </td>
+            <td>100 грн.</td>
+            <td><button class="btn btn-danger btn-sm">Удалить</button></td>
+          </tr>
+          <tr>
+            <td>Товар 2</td>
+            <td>50 грн.</td>
+            <td>
+              <div class="input-group">
+                <button class="btn btn-outline-secondary" type="button">-</button>
+                <input type="text" class="form-control text-center" value="2">
+                <button class="btn btn-outline-secondary" type="button">+</button>
+              </div>
+            </td>
+            <td>100 грн.</td>
+            <td><button class="btn btn-danger btn-sm">Удалить</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Итого</h5>
+          <p class="card-text">Количество товаров: 3</p>
+          <p class="card-text">Сумма заказа: 200 грн.</p>
+          <a href="#" class="btn btn-primary">Оформить заказ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="{% static 'store/js/my.js' %}"></script>
 </body>
