@@ -37,8 +37,7 @@ def menu(request):
             price_float = float(price_str) / 100
             price_formatted = round(price_float, 2)
             price.append(price_formatted)
-    print(type(price[0]))
-    print(price)
+
 
     for category in categories:
         if category.get('photo'):
@@ -59,6 +58,22 @@ def menu(request):
     return render(request, 'store/menu.html', context)
 
 def payment(request):
+
+
+    url = 'https://joinposter.com/api/incomingOrders.createIncomingOrder?token=590085:2678523168eeca3ec11d86a373e60ef2'
+
+    incoming_order = {
+        'spot_id': 1,
+        'phone': '+380680000000',
+        'products': [
+            {
+                'product_id': 6,
+                'count': 1
+            }
+        ]
+    }
+
+
     amount = 1000 # сумма оплаты в копейках (в данном случае 10 рублей)
     data = {
         'venue_id': settings.POSTER_VENUE_ID,
@@ -78,4 +93,47 @@ def payment(request):
         # обработка ошибки при создании оплаты
         return render(request, 'store/error.html', {'error': 'Ошибка при создании оплаты'})
 
+
+# url = 'https://joinposter.com/api/incomingOrders.createIncomingOrder?token=590085:2678523168eeca3ec11d86a373e60ef2'
+#
+# incoming_order = {
+#     'spot_id': 1,
+#     'phone': '+380680000000',
+#     'products': [
+#         {
+#             'product_id': 8,
+#             'count': 1
+#         }
+#     ]
+# }
+#
+# headers = {'Content-Type': 'application/json'}
+#
+# response = requests.post(url, data=json.dumps(incoming_order), headers=headers)
+#
+# print(response.text)
+
+
+from django.http import JsonResponse
+
+
+def pay(request):
+    if request.method == 'POST':
+        # Получаем данные из POST-запроса
+        amount = request.POST.get('amount')
+        order_id = request.POST.get('order-id')
+        venue_id = 1  # ID места на Poster
+
+        # Отправляем запрос на оплату
+        url = 'https://joinposter.com/api/incomingOrders.createIncomingOrder?token=590085:2678523168eeca3ec11d86a373e60ef2'
+        data = {
+            'amount': amount,
+            'order_id': order_id,
+            'venue_id': venue_id
+        }
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(url, data=json.dumps(data), headers=headers)
+
+        # Возвращаем результат в виде JSON
+        return JsonResponse({'success': True})
 
