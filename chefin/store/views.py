@@ -73,9 +73,9 @@ def payment(request):
         # получаем данные об оплате
         payment_data = response.json()
         # отображаем страницу с данными об оплате для пользователя
-        return render(request, 'payment.html', {'payment_data': payment_data})
+        return render(request, 'store/payment.html', {'payment_data': payment_data})
     else:
         # обработка ошибки при создании оплаты
-        return render(request, 'error.html', {'error': 'Ошибка при создании оплаты'})
+        return render(request, 'store/error.html', {'error': 'Ошибка при создании оплаты'})
 
 

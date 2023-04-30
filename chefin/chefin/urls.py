@@ -23,7 +23,7 @@ from store.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index',index,name='index'),
+    path('index/',index,name='index'),
     path('', menu, name='menu'),
-    path('payment', payment, name='payment'),
+    path('payment/', payment, name='payment'),
 ]
