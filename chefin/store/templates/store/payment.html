@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Оплата заказа</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <form id="payment-form" method="POST">
+        <label for="amount">Сумма к оплате:</label>
+        <input type="number" id="amount" name="amount" required><br><br>
+        <label for="order-id">Номер заказа:</label>
+        <input type="text" id="order-id" name="order-id" required><br><br>
+        <button type="submit">Оплатить</button>
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#payment-form').submit(function(e) {
+                e.preventDefault();
+                var amount = $('#amount').val();
+                var orderId = $('#order-id').val();
+                var postData = {
+                    'venue_id': 1234, // ID места на Poster
+                    'amount': amount, // Сумма к оплате
+                    'order_id': orderId // Номер заказа
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: '/pay/',
+                    data: postData,
+                    success: function(response) {
+                        console.log(response);
+                        alert('Оплата прошла успешно!');
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                        alert('Ошибка оплаты. Попробуйте еще раз.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

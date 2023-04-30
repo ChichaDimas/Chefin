@@ -19,8 +19,11 @@ from django.urls import path
 
 from store.views import *
 
+from chefin.store.views import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index',index,name='index'),
     path('', menu, name='menu'),
+    path('payment', payment, name='payment'),
 ]

@@ -1,6 +1,8 @@
 from django.shortcuts import render
 import requests
-from chefin.settings import POSTER_POS_API_KEY
+from django.conf import settings
+from chefin.settings import POSTER_POS_API_KEY, POSTER_VENUE_ID
+
 import json
 
 def index(request):
@@ -55,5 +57,25 @@ def menu(request):
 
     }
     return render(request, 'menu.html', context)
+
+def payment(request):
+    amount = 1000 # сумма оплаты в копейках (в данном случае 10 рублей)
+    data = {
+        'venue_id': settings.POSTER_VENUE_ID,
+        'amount': amount,
+    }
+    headers = {'Authorization': 'Bearer {}'.format(settings.POSTER_POS_API_KEY)}
+
+    # отправляем запрос на создание оплаты
+    response = requests.post('https://joinposter.com/api/payments.createPayment', json=data, headers=headers)
+
+    if response.status_code == 200:
+        # получаем данные об оплате
+        payment_data = response.json()
+        # отображаем страницу с данными об оплате для пользователя
+        return render(request, 'payment.html', {'payment_data': payment_data})
+    else:
+        # обработка ошибки при создании оплаты
+        return render(request, 'error.html', {'error': 'Ошибка при создании оплаты'})
 
 

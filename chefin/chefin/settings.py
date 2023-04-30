@@ -121,5 +121,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+POSTER_VENUE_ID = 590085
 POSTER_POS_API_KEY = '590085:2678523168eeca3ec11d86a373e60ef2'
 POSTER_POS_API_URL = 'https://joinposter.com/api/'
