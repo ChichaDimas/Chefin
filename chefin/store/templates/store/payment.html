@@ -21,14 +21,15 @@
                 var amount = $('#amount').val();
                 var orderId = $('#order-id').val();
                 var postData = {
-                    'venue_id': 1234, // ID места на Poster
+                    'venue_id': 1, // ID места на Poster
                     'amount': amount, // Сумма к оплате
                     'order_id': orderId // Номер заказа
                 };
                 $.ajax({
                     type: 'POST',
-                    url: '/pay/',
-                    data: postData,
+                    url: '{% url "pay" %}',
+                    data: JSON.stringify(postData),
+                    contentType: 'application/json',
                     success: function(response) {
                         console.log(response);
                         alert('Оплата прошла успешно!');

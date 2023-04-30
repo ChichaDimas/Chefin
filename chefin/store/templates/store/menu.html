@@ -11,12 +11,12 @@
 </head>
 <body>
 
-{#<!--<h1>Menu</h1>-->#}
-{#<!--<ul>-->#}
-{#<!--    {% for i in photo %}-->#}
-{#    <!--    <img src="{{ i }}" alt="">-->#}
-{#    <!--    {% endfor %}-->#}
-{#<!--</ul>-->#}
+=<h1>Menu</h1>=
+
+{% for category in categories %}
+    <li class="list-group-item">Кат: {{ category }}</li>
+{% endfor %}
+
 
 <div class="row" style="margin-top: 50px; margin-left: 4cm; margin-right: 2cm;">
   {% for category in categories %}
