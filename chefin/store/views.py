@@ -2,8 +2,9 @@ from django.shortcuts import render
 import requests
 from django.conf import settings
 from chefin.settings import POSTER_POS_API_KEY, POSTER_VENUE_ID
-
+from django.http import JsonResponse
 import json
+
 
 def index(request):
     context = {
@@ -13,9 +14,6 @@ def index(request):
 
 def get_menu_categories(api_key):
     url = 'https://joinposter.com/api/menu.getProducts'
-
-                # для категорий так
-    # url = 'https://joinposter.com/api/menu.getCategories'
 
     params = {
         'token': api_key,
@@ -58,8 +56,6 @@ def menu(request):
     return render(request, 'store/menu.html', context)
 
 def payment(request):
-
-
     url = 'https://joinposter.com/api/incomingOrders.createIncomingOrder?token=590085:2678523168eeca3ec11d86a373e60ef2'
 
     incoming_order = {
@@ -94,27 +90,7 @@ def payment(request):
         return render(request, 'store/error.html', {'error': 'Ошибка при создании оплаты'})
 
 
-# url = 'https://joinposter.com/api/incomingOrders.createIncomingOrder?token=590085:2678523168eeca3ec11d86a373e60ef2'
-#
-# incoming_order = {
-#     'spot_id': 1,
-#     'phone': '+380680000000',
-#     'products': [
-#         {
-#             'product_id': 8,
-#             'count': 1
-#         }
-#     ]
-# }
-#
-# headers = {'Content-Type': 'application/json'}
-#
-# response = requests.post(url, data=json.dumps(incoming_order), headers=headers)
-#
-# print(response.text)
 
-
-from django.http import JsonResponse
 
 
 def pay(request):

@@ -55,7 +55,8 @@
 
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Добавить в корзину</button>
+
+
                         </form>
                     </div>
                 </div>
@@ -63,6 +64,8 @@
         {% endif %}
     {% endfor %}
 </div>
+<a href="{% url 'add_to_cart' %}" class="btn btn-primary d-block mx-auto" style="width: 200px; font-size: 1.2rem;">Корзина</a>
+
 
 
 <script src="{% static 'store/js/my.js' %}"></script>
