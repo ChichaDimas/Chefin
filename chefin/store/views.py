@@ -137,3 +137,8 @@ def pay(request):
         # Возвращаем результат в виде JSON
         return JsonResponse({'success': True})
 
+def add_to_cart(request):
+    context = {
+        'title':'Store',
+    }
+    return render(request,'store/add_to_cart.html',context)

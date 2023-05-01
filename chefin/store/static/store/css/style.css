@@ -82,3 +82,20 @@ input[type="number"],
 .button:active {
     background-color: #0066b3;
 }
+
+
+.btn-inc, .btn-dec {
+  font-size: 1.2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.btn-inc {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.btn-dec {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
