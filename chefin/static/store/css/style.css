@@ -99,3 +99,28 @@ input[type="number"],
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
+
+
+table td {
+  text-align: center;
+}
+
+table th {
+  text-align: center;
+}
+
+.badge {
+  font-size: 1rem;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+
+
+
+
+
+
+
+
