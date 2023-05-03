@@ -2,7 +2,7 @@ from django.shortcuts import render
 import requests
 from django.conf import settings
 from chefin.settings import POSTER_POS_API_KEY, POSTER_VENUE_ID
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 import json
 
 
@@ -118,3 +118,20 @@ def add_to_cart(request):
         'title':'Store',
     }
     return render(request,'store/add_to_cart.html',context)
+
+
+
+# def basket_add(request,product_id):
+#     product = menu.request.get(id=product_id)
+#     baskets = Basket.objects.filter(user=request.user,product=product)
+#
+#     if not baskets.exists():
+#         Basket.objects.create(user=request.user,product=product,quantity=1)
+#     else:
+#         basket = baskets.first()
+#         basket.quantity+=1
+#         basket.save()
+#
+#     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
