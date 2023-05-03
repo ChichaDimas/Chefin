@@ -25,7 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', menu, name='menu'),
     path('index/', index, name='index'),
-    path('payment/', payment, name='payment'),
     path('pay/', pay, name='pay'),
     path('add_to_cart/', add_to_cart, name='add_to_cart'),
 ]

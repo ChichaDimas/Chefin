@@ -44,6 +44,7 @@
                     <th>Количество</th>
                     <th>Цена за ед.</th>
                 </tr>
+
                 </thead>
                 <tbody>
                 <tr>
@@ -60,6 +61,10 @@
                         </div>
                     </td>
                     <td>100 грн.</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeItem(this)">Удалить</button>
+                    </td>
+
                 </tr>
                 <tr>
                     <td>Товар 2</td>
@@ -75,6 +80,10 @@
                         </div>
                     </td>
                     <td>50 грн.</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeItem(this)">Удалить</button>
+                    </td>
+
                 </tr>
                 <tr>
                     <td>Товар 3</td>
@@ -90,6 +99,10 @@
                         </div>
                     </td>
                     <td>20 грн.</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeItem(this)">Удалить</button>
+                    </td>
+
                 </tr>
                 </tbody>
                 <tfoot>
@@ -103,19 +116,11 @@
     </div>
 
 
-    <form action="https://api.fondy.eu/api/checkout/redirect/" method="POST">
-        <input type="hidden" name="merchant_id" value="1397120">
-        <input type="hidden" name="order_id" value="1">
-        <input type="hidden" name="order_desc" value="YOUR_ORDER_DESCRIPTION">
-        <input type="hidden" name="amount" value="YOUR_ORDER_AMOUNT">
-        <input type="hidden" name="currency" value="YOUR_ORDER_CURRENCY">
-        <input type="hidden" name="response_url" value="http://demo.merchant">
-        <input type="hidden" name="server_callback_url" value="http://demo.merchant">
+    <a href="{% url 'pay' %}" class="btn btn-success btn-block mt-3">Оплатить</a>
 
-        <input type="submit" value="Оплатить" class="btn btn-primary">
-    </form>
 
- </div>
 
+
+</div>
 </body>
 </html>

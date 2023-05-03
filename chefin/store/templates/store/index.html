@@ -5,6 +5,10 @@
     <title>{{ title }}</title>
 </head>
 <body>
-    <p>Hello</p>
+    =<h1>Menu</h1>=
+
+{% for category in categories %}
+    <li class="list-group-item">Кат: {{ category }}</li>
+{% endfor %}
 </body>
 </html>

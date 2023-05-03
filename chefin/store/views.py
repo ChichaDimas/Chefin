@@ -1,16 +1,14 @@
 from django.shortcuts import render
 import requests
 from django.conf import settings
+from requests import Response
+
 from chefin.settings import POSTER_POS_API_KEY, POSTER_VENUE_ID
 from django.http import JsonResponse, HttpResponseRedirect
 import json
+from cloudipsp import Api, Checkout
 
 
-def index(request):
-    context = {
-        'title':'Store',
-    }
-    return render(request,'store/index.html',context)
 
 def get_menu_categories(api_key):
     url = 'https://joinposter.com/api/menu.getProducts'
@@ -55,63 +53,7 @@ def menu(request):
     }
     return render(request, 'store/menu.html', context)
 
-def payment(request):
-    url = 'https://joinposter.com/api/incomingOrders.createIncomingOrder?token=590085:2678523168eeca3ec11d86a373e60ef2'
 
-    incoming_order = {
-        'spot_id': 1,
-        'phone': '+380680000000',
-        'products': [
-            {
-                'product_id': 6,
-                'count': 1
-            }
-        ]
-    }
-
-
-    amount = 1000 # сумма оплаты в копейках (в данном случае 10 рублей)
-    data = {
-        'venue_id': settings.POSTER_VENUE_ID,
-        'amount': amount,
-    }
-    headers = {'Authorization': 'Bearer {}'.format(settings.POSTER_POS_API_KEY)}
-
-    # отправляем запрос на создание оплаты
-    response = requests.post('https://joinposter.com/api/payments.createPayment', json=data, headers=headers)
-
-    if response.status_code == 200:
-        # получаем данные об оплате
-        payment_data = response.json()
-        # отображаем страницу с данными об оплате для пользователя
-        return render(request, 'store/payment.html', {'payment_data': payment_data})
-    else:
-        # обработка ошибки при создании оплаты
-        return render(request, 'store/error.html', {'error': 'Ошибка при создании оплаты'})
-
-
-
-
-
-def pay(request):
-    if request.method == 'POST':
-        # Получаем данные из POST-запроса
-        amount = request.POST.get('amount')
-        order_id = request.POST.get('order-id')
-        venue_id = 1  # ID места на Poster
-
-        # Отправляем запрос на оплату
-        url = 'https://joinposter.com/api/incomingOrders.createIncomingOrder?token=590085:2678523168eeca3ec11d86a373e60ef2'
-        data = {
-            'amount': amount,
-            'order_id': order_id,
-            'venue_id': venue_id
-        }
-        headers = {'Content-Type': 'application/json'}
-        response = requests.post(url, data=json.dumps(data), headers=headers)
-
-        # Возвращаем результат в виде JSON
-        return JsonResponse({'success': True})
 
 def add_to_cart(request):
     context = {
@@ -133,5 +75,27 @@ def add_to_cart(request):
 #         basket.save()
 #
 #     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+def index(request):
+    context = {
+        'title':'Store',
+    }
+    return render(request,'store/index.html',context)
+
+
+
+def pay(request):
+
+    api = Api(merchant_id=1397120,
+          secret_key='Not for tests. Test credentials: https://docs.fondy.eu/docs/page/2/ ')
+    checkout = Checkout(api=api)
+    data = {
+        "currency": "UAH",
+        "amount": 300
+        }
+    url = checkout.url(data).get('checkout_url')
+    print(url)
+    return render(request, 'store/payment.html', url)
 
 

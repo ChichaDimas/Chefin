@@ -15,3 +15,11 @@ function incrementValue(obj) {
   value++;
   input.value = value;
 }
+
+
+function removeItem(btn) {
+  // Находим родительскую строку элемента
+  var row = btn.parentNode.parentNode;
+  // Удаляем строку из таблицы
+  row.parentNode.removeChild(row);
+}
