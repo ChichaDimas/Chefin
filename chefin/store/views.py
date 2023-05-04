@@ -96,6 +96,6 @@ def pay(request):
         }
     url = checkout.url(data).get('checkout_url')
     print(url)
-    return render(request, 'store/payment.html', url)
+    return render(request, url)
 
 
