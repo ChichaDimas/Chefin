@@ -56,8 +56,18 @@ def menu(request):
 
 
 def add_to_cart(request):
+    api = Api(merchant_id=1397120,
+              secret_key='Not for tests. Test credentials: https://docs.fondy.eu/docs/page/2/ ')
+    checkout = Checkout(api=api)
+    data = {
+        "currency": "UAH",
+        "amount": 300
+    }
+    url = checkout.url(data).get('checkout_url')
+    print(url)
     context = {
         'title':'Store',
+        'url': url
     }
     return render(request,'store/add_to_cart.html',context)
 
@@ -96,6 +106,9 @@ def pay(request):
         }
     url = checkout.url(data).get('checkout_url')
     print(url)
-    return render(request, 'store/payment.html', url)
+    context = {
+        'url': url
+    }
+    return render(request, 'store/payment.html', context)
 
 
