@@ -32,7 +32,7 @@
             </form>
         </div>
         <div class="col-md-9 text-right">
-            <h5>Корзина <span class="badge badge-secondary">3</span></h5>
+            <h5>Корзина <span class="badge badge-secondary">{{ count }}</span></h5>
         </div>
     </div>
     <div class="row mt-3">
@@ -47,80 +47,61 @@
 
                 </thead>
                 <tbody>
+                {% for item in cart.items %}
                 <tr>
-                    <td>Товар 1</td>
+                    <td>{{ item.product.name }}</td>
                     <td>
                         <div class="input-group">
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-secondary btn-sm">-</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="decrementQuantity('{{ item.id }}')">-</button>
                 </span>
-                            <input type="text" class="form-control form-control-sm text-center" value="2">
+                            <input type="text" class="form-control form-control-sm text-center" value="{{ item.quantity }}" id="quantity-{{ item.id }}">
                             <span class="input-group-btn">
-                  <button type="button" class="btn btn-secondary btn-sm">+</button>
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="incrementQuantity('{{ item.id }}')">+</button>
                 </span>
                         </div>
                     </td>
-                    <td>100 грн.</td>
+                    <td>{{ item.product.price }} грн.</td>
                     <td>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="removeItem(this)">Удалить</button>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeItem('{{ item.id }}')">Удалить</button>
                     </td>
-
                 </tr>
-                <tr>
-                    <td>Товар 2</td>
-                    <td>
-                        <div class="input-group">
-                <span class="input-group-btn">
-                  <button type="button" class="btn btn-secondary btn-sm">-</button>
-                </span>
-                            <input type="text" class="form-control form-control-sm text-center" value="1">
-                            <span class="input-group-btn">
-                  <button type="button" class="btn btn-secondary btn-sm">+</button>
-                </span>
-                        </div>
-                    </td>
-                    <td>50 грн.</td>
-                    <td>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="removeItem(this)">Удалить</button>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Товар 3</td>
-                    <td>
-                        <div class="input-group">
-                <span class="input-group-btn">
-                  <button type="button" class="btn btn-secondary btn-sm">-</button>
-                </span>
-                            <input type="text" class="form-control form-control-sm text-center" value="4">
-                            <span class="input-group-btn">
-                  <button type="button" class="btn btn-secondary btn-sm">+</button>
-                </span>
-                        </div>
-                    </td>
-                    <td>20 грн.</td>
-                    <td>
-                        <button type="button" class="btn btn-danger btn-sm" onclick="removeItem(this)">Удалить</button>
-                    </td>
-
-                </tr>
+                {% endfor %}
                 </tbody>
                 <tfoot>
                 <tr>
                     <td colspan="2" class="text-right"><strong>Итого:</strong></td>
-                    <td>500 грн.</td>
+                    <td>{{ cart.total_price }} грн.</td>
                 </tr>
                 </tfoot>
             </table>
         </div>
     </div>
 
-
-<a href="{{ url }}" class="btn btn-success btn-block mt-3">Оплатить</a>
-
-
-
-
+    <a href="{{ url }}" class="btn btn-success btn-block mt-3">Оплатить</a>
 </div>
+
+<script>
+function incrementQuantity(item_id) {
+    var input = document.getElementById("quantity-" + item_id);
+    input.value++;
+}
+
+function decrementQuantity(item_id) {
+    var input = document.getElementById("quantity-" + item_id);
+    if (input.value > 1) {
+        input.value--;
+    }
+}
+
+{#function removeItem(item_id) {#}
+{#    if (confirm("Вы уверены, что хотите удалить этот товар?")) {#}
+{#        window.location.href = "{% url 'remove_from_cart' item_id %}";#}
+{##}
+{#    }#}
+{#}#}
+</script>
+
+
 </body>
 </html>
