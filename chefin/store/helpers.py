@@ -27,21 +27,30 @@ def fill_database(api_key):
         'format': 'json'
     }
 
-    response = requests.get(url, params=params)
-    response.raise_for_status()
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        print(f"Error: {err}")
+        return
 
     if response.status_code == 200:
         categories = get_menu_categories(api_key)
 
         for category in categories:
             # pprint(category)
-            product, created = Product.objects.get_or_create(
-                name=category.get('product_name'),
-                category=category.get('category_name'),
-                description=category.get('product_production_description'),
-                price=category.get('price'),
-                image=category.get('photo'),
+            try:
+                product, created = Product.objects.get_or_create(
+                    name=category.get('product_name'),
+                    category=category.get('category_name'),
+                    description=category.get('product_production_description'),
+                    price=category.get('price'[0]),
+                    image=category.get('photo'),
                 )
+            except Exception as err:
+                print(f"Error: {err}")
+                continue
+
 
 
 
