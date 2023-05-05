@@ -16,15 +16,14 @@
 
 <div class="row" style="margin-top: 50px; margin-left: 4cm; margin-right: 2cm;">
 {% for category in categories %}
-    {% if '' in category.category_name %}
         <div class="col-md-4">
             <div class="card mx-2 my-2" style="width: 20rem;">
-                <img src="{{ category.photo }}">
+                <img src="{{ category.image }}">
 
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Категория: {{ category.category_name }}</li>
-                    <li class="list-group-item">Название: {{ category.product_name }}</li>
-                    <li class="list-group-item">Описание: {{ category.product_production_description }}</li>
+                    <li class="list-group-item">Категория: {{ category.category }}</li>
+                    <li class="list-group-item">Название: {{ category.name }}</li>
+                    <li class="list-group-item">Описание: {{ category.description }}</li>
                     <li class="list-group-item">Цена: {{ category.price }} грн.</li>
                 </ul>
 
@@ -57,7 +56,7 @@
                 </div>
             </div>
         </div>
-    {% endif %}
+
 {% endfor %}
 
 <a href="{% url 'add_to_cart' %}" class="btn btn-primary d-block mx-auto" style="width: 200px; font-size: 1.2rem;">Корзина</a>
