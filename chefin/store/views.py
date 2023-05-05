@@ -20,11 +20,7 @@ from urllib.parse import urlparse
 from django.shortcuts import render
 from .helpers import *
 
-# def menu(request):
-#     api_key = POSTER_POS_API_KEY
-#     fill_database(api_key)
-#
-#     return render(request, 'store/menu.html', {})
+
 
 def menu(request):
     api_key = POSTER_POS_API_KEY

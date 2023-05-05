@@ -34,12 +34,12 @@ def fill_database(api_key):
         categories = get_menu_categories(api_key)
 
         for category in categories:
-            pprint(category)
+            # pprint(category)
             product, created = Product.objects.get_or_create(
                 name=category.get('product_name'),
                 category=category.get('category_name'),
                 description=category.get('product_production_description'),
-                # price=category.get('price'),
+                price=category.get('price'),
                 image=category.get('photo'),
                 )
 
