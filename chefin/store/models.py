@@ -1,4 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db import models
+
+from django.conf import settings
 
 # Create your models here.
 
@@ -14,3 +18,20 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
+class Basket(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        default=settings.ANONYMOUS_USER_ID
+    )
+    product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField(default=0)
+    created_timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Корзина : {self.product.name}'

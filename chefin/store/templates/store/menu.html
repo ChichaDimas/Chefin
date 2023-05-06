@@ -33,26 +33,9 @@
                     <form action="{% url 'add_to_cart' %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="product_id" value="{{ category.id }}">
-                        <div class="form-group">
-                            <label for="quantity">Количество:</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <button type="button" class="btn btn-outline-secondary btn-dec"
-                                            onclick="decrementValue(this)">-
-                                    </button>
-                                </div>
-                                <input type="number" id="quantity" name="quantity" class="form-control text-center"
-                                       min="1" value="1">
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-outline-secondary btn-inc"
-                                            onclick="incrementValue(this)">+
-                                    </button>
-                                </div>
 
-                            </div>
-                        </div>
+{#                        <a href="{% url 'categories'  %}" class="btn btn-success btn-block mt-3">Купить</a>#}
 
-                        <button type="submit" class="btn btn-success btn-block mt-3">Купить</button>
 
                     </form>
                 </div>

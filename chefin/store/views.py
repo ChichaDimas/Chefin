@@ -1,22 +1,10 @@
 import os
-
-from django.shortcuts import render
 import requests
 from chefin.settings import POSTER_POS_API_KEY, POSTER_VENUE_ID
 from cloudipsp import Api, Checkout
-from django.http import JsonResponse
-from django.shortcuts import redirect, render
-from django.views.decorators.http import require_POST
-from store.cart import Cart
-from .models import Product
-from django.core.files.base import ContentFile
-from urllib.request import urlretrieve
-
-import requests
-from urllib.parse import urlparse
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponseRedirect
 from .helpers import *
-
+from .models import *
 
 
 def menu(request):
@@ -27,28 +15,26 @@ def menu(request):
     return render(request,'store/menu.html',context)
 
 
+def basket(request):
 
-# def get_menu_categories(api_key):
-#     url = 'https://joinposter.com/api/menu.getProducts'
-#
-#     params = {
-#         'token': api_key,
-#         'format': 'json'
-#     }
-#     response = requests.get(url, params=params)
-#     if response.status_code == 200:
-#         return response.json().get('response')
-#     return []
-#
-# def menu(request):
-#     categories = get_menu_categories(POSTER_POS_API_KEY)
-#
-#     context = {
-#         'categories': categories,
-#         'title': 'Hellobro',
-#
-#     }
-#     return render(request, 'store/menu.html', context)
+    context = {'title': 'Корзина',
+               'baskets':Basket.objects.all(),
+               }
+    return render(request,'store/baskets.html',context)
+
+def basket_add(request, product_id):
+    product = Product.objects.get(id=product_id)
+    baskets = Basket.objects.filter(user=request.user, product=product)
+
+    if not baskets.exists():
+        Basket.objects.create(user=request.user, product=product,quantity=1)
+    else:
+        basket = baskets.first()
+        basket.quantity +=1
+        basket.save()
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
 
 
 def add_to_cart(request):
