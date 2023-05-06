@@ -5,6 +5,10 @@ import os
 from pprint import pprint
 
 
+
+
+
+
 def get_menu_categories(api_key):
     url = 'https://joinposter.com/api/menu.getProducts'
 
@@ -35,27 +39,26 @@ def fill_database(api_key):
         return
 
     if response.status_code == 200:
+        # Delete existing categories
+        Product.objects.all().delete()
+
         categories = get_menu_categories(api_key)
 
         for category in categories:
-            # pprint(category)
+            # Create new categories
+
+            # Create new products
             try:
                 product, created = Product.objects.get_or_create(
                     name=category.get('product_name'),
                     category=category.get('category_name'),
                     description=category.get('product_production_description'),
-                    # price=category.get('price', {}).get('1', 0),
-                    price = list(category.get('price', {}).values())[0],
-
+                    price=list(category.get('price', {}).values())[0],
                     image=f"https://joinposter.com{category.get('photo', '')}",
                 )
-
             except Exception as err:
                 print(f"Error: {err}")
                 continue
-
-
-
 
 
 
