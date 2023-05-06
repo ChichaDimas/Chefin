@@ -14,9 +14,6 @@ from urllib.request import urlretrieve
 
 import requests
 from urllib.parse import urlparse
-
-
-
 from django.shortcuts import render
 from .helpers import *
 
