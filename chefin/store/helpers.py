@@ -45,7 +45,7 @@ def fill_database(api_key):
                     category=category.get('category_name'),
                     description=category.get('product_production_description'),
                     # price=category.get('price', {}).get('1', 0),
-                    # price=category.get('price', {}).get('1', 0),
+                    price=category.get('price'[0]),
 
                     image=f"https://joinposter.com{category.get('photo', '')}",
                 )
