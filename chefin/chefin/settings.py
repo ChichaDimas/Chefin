@@ -124,6 +124,7 @@ POSTER_POS_API_URL = 'https://joinposter.com/api/'
 
 
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 
 ANONYMOUS_USER_ID = -1
 # ANONYMOUS_USER = AnonymousUser()

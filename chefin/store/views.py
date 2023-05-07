@@ -1,5 +1,5 @@
 import os
-import requests
+from django.http import JsonResponse
 from chefin.settings import POSTER_POS_API_KEY, POSTER_VENUE_ID
 from cloudipsp import Api, Checkout
 from django.shortcuts import render,HttpResponseRedirect
@@ -17,24 +17,58 @@ def menu(request):
     return render(request,'store/menu.html',context)
 
 
-def profile(request):
-    context = {'title': 'Корзина',
-               'baskets':Basket.objects.all(),
-               }
-    return render(request,'store/baskets.html',context)
+# def profile(request):
+#     context = {'title': 'Корзина',
+#                'baskets':Basket.objects.all(),
+#                }
+#     return render(request,'store/baskets.html',context)
+#
+
+
+
 
 def basket_add(request, product_id):
     product = Product.objects.get(id=product_id)
-    baskets = Basket.objects.filter(customer_id=request.session.session_key, product=product)
-
-    if not baskets.exists():
-        Basket.objects.create(customer_id=request.session.session_key, product=product, quantity=1)
-    else:
-        basket = baskets.first()
-        basket.quantity += 1
-        basket.save()
-
+    request.session.setdefault('basket', {})
+    basket = request.session['basket']
+    basket[product_id] = product.to_json()  # преобразование объекта Product в JSON
+    request.session.modified = True
+    # return JsonResponse({'success': True})
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+def profile(request):
+    # Получаем текущую корзину из сессии пользователя
+    basket = request.session.get('basket', {})
+    basket_items = basket.values()
+
+    context = {'title': 'Корзина',
+               'baskets': basket_items,
+               }
+    return render(request,'store/baskets.html',context)
+
+
+
+
+
+
+
+
+
+
+
+
+# def basket_add(request, product_id):
+#     product = Product.objects.get(id=product_id)
+#     baskets = Basket.objects.filter(customer_id=request.session.session_key, product=product)
+#
+#     if not baskets.exists():
+#         Basket.objects.create(customer_id=request.session.session_key, product=product, quantity=1)
+#     else:
+#         basket = baskets.first()
+#         basket.quantity += 1
+#         basket.save()
+#
+#     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 
