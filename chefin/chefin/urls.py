@@ -24,9 +24,10 @@ from store.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', menu, name='menu'),
-    path('index/', index, name='index'),
-    path('basket/', basket, name='basket'),
+    path('profile/', profile,name='profile'),
+
     path('baskets/add/<int:product_id>/', basket_add, name='basket_add'),
+
     path('add_to_cart/', add_to_cart, name='add_to_cart'),
 
     # path('payment/', payment, name='payment'),

@@ -10,13 +10,14 @@ from .models import *
 def menu(request):
     api_key = POSTER_POS_API_KEY
     fill_database(api_key)
-    categories = Product.objects.all()
-    context = {'categories': categories}
+
+    context = {'title': 'Store - магазин',
+        'products': Product.objects.all(),
+        }
     return render(request,'store/menu.html',context)
 
 
-def basket(request):
-
+def profile(request):
     context = {'title': 'Корзина',
                'baskets':Basket.objects.all(),
                }
@@ -24,16 +25,18 @@ def basket(request):
 
 def basket_add(request, product_id):
     product = Product.objects.get(id=product_id)
-    baskets = Basket.objects.filter(user=request.user, product=product)
+    baskets = Basket.objects.filter(customer_id=request.session.session_key, product=product)
 
     if not baskets.exists():
-        Basket.objects.create(user=request.user, product=product,quantity=1)
+        Basket.objects.create(customer_id=request.session.session_key, product=product, quantity=1)
     else:
         basket = baskets.first()
-        basket.quantity +=1
+        basket.quantity += 1
         basket.save()
 
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
 
 
 
@@ -54,12 +57,6 @@ def add_to_cart(request):
 
 
 
-
-def index(request):
-    context = {
-        'title':'Store',
-    }
-    return render(request,'store/index.html',context)
 
 
 
