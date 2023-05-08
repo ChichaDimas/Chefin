@@ -44,3 +44,14 @@ class Basket(models.Model):
 
     def __str__(self):
         return f'Корзина : {self.product.name}'
+
+    def sum(self):
+        return int(self.product.price_for_view) * self.quantity
+
+
+# class BasketQuerySet(models.QuerySet):
+#     def total_sum(self):
+#         return sum(basket.sum() for basket in self)
+#
+#     def total_quantity(self):
+#         return sum(basket.quantity for basket in self)
