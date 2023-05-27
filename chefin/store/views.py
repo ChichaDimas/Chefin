@@ -23,26 +23,7 @@ def basket_add(request, product_id):
     basket = request.session['basket']
     basket[product_id] = product.to_json()  # преобразование объекта Product в JSON
     request.session.modified = True
-    # return JsonResponse({'success': True})
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
-
-# def profile(request):
-#     # Получаем текущую корзину из сессии пользователя
-#     basket = request.session.get('basket', {})
-#     print(basket)
-#     basket_items = basket.keys()  # получаем ключи из словаря basket
-#
-#     # basket_items = basket.values()
-#
-#     ids = [item.get('id') for item in basket.values()]
-#     context = {'title': 'Корзина',
-#                'baskets': basket,
-#                'product_ids': ids,
-#                }
-#
-#     # print(ids)
-#     return render(request,'store/baskets.html',context)
-
 
 
 
@@ -59,67 +40,17 @@ def basket_remove(request, product_id):
 
 
 
-
-# def basket_remove(request, product_id):
-#     basket = request.session.get('basket', {})
-#     if product_id in basket:
-#         del basket[product_id]
-#         request.session['basket'] = basket
-#     return HttpResponseRedirect(request.META['HTTP_REFERER'])
-
-
-
-
-
-
-# def basket_remove(request,basket_id):
-#     basket = Basket.objects.get(id=basket_id)
-#     basket.delete()
-#     return HttpResponseRedirect(request.META['HTTP_REFERER'])
-
-
-
 def profile(request):
     # Получаем текущую корзину из сессии пользователя
     basket = request.session.get('basket', {})
     basket_items = basket.values()
-    basket_items2 = basket.keys()
-    # print(basket_items)
 
-    # total_sum = sum(int(item['price']) * int(item.get('quantity', 1)) for item in basket_items)
 
-    # total_sum = sum(item['price'] * item['quantity'] for item in basket_items)
 
-    # total_quantity = sum(basket.quantity for basket in basket_items )
     context = {'title': 'Корзина',
                'baskets': basket_items,
-               'baskets2': basket_items2,
-               # 'total_sum':total_sum,
-               # 'total_quantity':total_quantity,
                }
     return render(request,'store/baskets.html',context)
-
-
-
-
-
-
-
-# def basket_add(request, product_id):
-#     product = Product.objects.get(id=product_id)
-#     baskets = Basket.objects.filter(customer_id=request.session.session_key, product=product)
-#
-#     if not baskets.exists():
-#         Basket.objects.create(customer_id=request.session.session_key, product=product, quantity=1)
-#     else:
-#         basket = baskets.first()
-#         basket.quantity += 1
-#         basket.save()
-#
-#     return HttpResponseRedirect(request.META['HTTP_REFERER'])
-
-
-
 
 
 def add_to_cart(request):
@@ -142,3 +73,44 @@ def add_to_cart(request):
 
 
 
+# def basket_add(request, product_id):
+#     product = Product.objects.get(id=product_id)
+#     request.session.setdefault('basket', {})
+#     basket = request.session['basket']
+#     basket[product_id] = product.to_json()  # преобразование объекта Product в JSON
+#     basket[product_id]['basket_id'] = product_id  # добавление 'basket_id'
+#     request.session.modified = True
+#
+#     # Обновление количества продуктов в корзине
+#     basket_items = request.session['basket'].values()
+#     total_quantity = sum(item.get('quantity', 1) for item in basket_items)
+#     request.session['total_quantity'] = total_quantity
+#
+#     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+#
+#
+#
+# def get_quantity_for_basket(product_id, basket_items):
+#     for item in basket_items:
+#         if str(item['id']) == str(product_id):
+#             return item.get('quantity', 0)
+#     return 0
+#
+#
+# def profile(request):
+#     # Получаем текущую корзину из сессии пользователя
+#     basket = request.session.get('basket', {})
+#     basket_items = basket.values()
+#
+#     context = {'title': 'Корзина',
+#                'baskets': basket_items,
+#                # 'total_quantity': sum(item['quantity'] for item in basket_items),
+#                'total_quantity': sum(item.get('quantity', 0) for item in basket_items),
+#
+#                }
+#
+#     # Добавляем общую сумму
+#     total_sum = sum(item['price'] * get_quantity_for_basket(item['basket_id'], basket_items) for item in basket_items)
+#     context['total_sum'] = total_sum
+#
+#     return render(request,'store/baskets.html',context)

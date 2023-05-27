@@ -30,10 +30,8 @@ urlpatterns = [
     path('basket_remove/<int:product_id>/', basket_remove, name='basket_remove'),
 
 
-    # path('baskets/remove/<int:product_id>/', basket_remove, name='basket_remove'),
-
     path('add_to_cart/', add_to_cart, name='add_to_cart'),
 ]
 
 
-    # path('payment/', payment, name='payment'),
+
