@@ -2,6 +2,8 @@
 # from django.contrib.auth.models import AnonymousUser
 from pathlib import Path
 
+from django_jinja.builtins import DEFAULT_EXTENSIONS
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
-
+    'django_jinja',
 
     'store',
 ]
@@ -45,7 +47,15 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'chefin.urls'
 
 TEMPLATES = [
-
+    {
+        'BACKEND': 'django_jinja.backend.Jinja2',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'environment': 'store.jinja2.environment',
+            'extensions': DEFAULT_EXTENSIONS,
+        },
+    },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -60,6 +70,23 @@ TEMPLATES = [
         },
     },
 ]
+
+# TEMPLATES = [
+#
+#     {
+#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#         'DIRS': [],
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'context_processors': [
+#                 'django.template.context_processors.debug',
+#                 'django.template.context_processors.request',
+#                 'django.contrib.auth.context_processors.auth',
+#                 'django.contrib.messages.context_processors.messages',
+#             ],
+#         },
+#     },
+# ]
 
 WSGI_APPLICATION = 'chefin.wsgi.application'
 
