@@ -1,11 +1,9 @@
-import os
-from django.http import JsonResponse
-from chefin.settings import POSTER_POS_API_KEY, POSTER_VENUE_ID
+from chefin.settings import POSTER_POS_API_KEY
 from cloudipsp import Api, Checkout
 from django.shortcuts import render,HttpResponseRedirect
 from .helpers import *
 from .models import *
-
+from store.templatetags.custom_filters import mul_price
 
 def menu(request):
     api_key = POSTER_POS_API_KEY
@@ -55,17 +53,31 @@ def basket_remove(request, product_id):
 
 
 
+
 def profile(request):
     # Получаем текущую корзину из сессии пользователя
     basket = request.session.get('basket', {})
     basket_items = basket.values()
 
+    context = {
+        'title': 'Корзина',
+        'baskets': basket_items,
+        'mul_price': mul_price,
+        'savedValue': 1,
+    }
+    return render(request, 'store/baskets.html', context)
 
-
-    context = {'title': 'Корзина',
-               'baskets': basket_items,
-               }
-    return render(request,'store/baskets.html',context)
+# def profile(request):
+#     # Получаем текущую корзину из сессии пользователя
+#     basket = request.session.get('basket', {})
+#     basket_items = basket.values()
+#
+#
+#
+#     context = {'title': 'Корзина',
+#                'baskets': basket_items,
+#                }
+#     return render(request,'store/baskets.html',context)
 
 
 def add_to_cart(request):
