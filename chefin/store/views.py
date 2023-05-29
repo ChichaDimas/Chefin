@@ -11,10 +11,25 @@ def menu(request):
     api_key = POSTER_POS_API_KEY
     fill_database(api_key)
 
-    context = {'title': 'Store - магазин',
-        'products': Product.objects.all(),
-        }
-    return render(request,'store/menu.html',context)
+    query = request.GET.get('query')
+    category = request.GET.get('category')
+
+    products = Product.objects.all()
+
+    if query:
+        products = products.filter(name__icontains=query)
+
+    if category:
+        products = products.filter(category__icontains=category)
+
+    context = {
+        'title': 'Store - магазин',
+        'products': products,
+    }
+    return render(request, 'store/menu.html', context)
+
+
+
 
 
 def basket_add(request, product_id):
